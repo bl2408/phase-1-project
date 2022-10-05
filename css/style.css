@@ -1,0 +1,23 @@
+:root{
+    --loaderBg: #f3f3f3;
+    --loaderHighlight: #3498db;
+}
+
+
+/* LOADER */
+.loader {
+    border: 10px solid var(--loaderBg);
+    border-top: 10px solid var(--loaderHighlight);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 0.5s linear infinite;
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
