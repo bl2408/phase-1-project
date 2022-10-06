@@ -17,6 +17,69 @@ body > * {
     font-size: var(--baseFontSize);
 }
 
+#notification-bar{
+    width: 100vw;
+    height: 80px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    font-size: 1.4rem;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 2;
+
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    pointer-events: none
+}
+
+#notification-bar > .container-width{
+    height: 100%;
+}
+
+.notif-item{
+    width: 100%;
+    background-color: var(--secondaryBg);
+    height: 100%;
+
+    border-radius: 10px;
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.1);
+    color: var(--baseFontColor);
+
+    padding: 5px 10px;
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: 50px 1fr 40px;
+
+    pointer-events: all;
+}
+.notif-item > :first-child{
+    font-size: 3.2rem;
+}
+.notif-item > :last-child{
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.notif-item > :first-child, .notif-item > :last-child{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+}
+
+.notif-error{
+    background-color: var(--notifError) !important;
+}
+.notif-success{
+    background-color: var(--notifSuccess) !important;
+}
+
 #overlay{
     position: absolute;
     top:0;
@@ -74,6 +137,7 @@ nav{
     background-color: transparent;
     color: inherit;
     font-weight: bold;
+    cursor: pointer;
 }
 
 #nav-buttons > .active{
@@ -90,7 +154,7 @@ nav{
     height:100%;
     background-color: var(--navIndicatorHighlight);
     position: absolute;
-    transition: left 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 
@@ -130,6 +194,8 @@ main > section{
 .flex-center{
     display: flex;
     justify-content: center;
+    padding: 0 4px;
+    box-sizing: border-box;
 }
 .container-width{
     min-width: 320px;

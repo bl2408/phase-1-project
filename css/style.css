@@ -4,6 +4,19 @@ button {
     font-size: clamp(1.6rem, 2.5vw, 2rem);
 }
 
+/* NOTIFICATIONS */
+.notif-item{
+    animation: animNotif 5s forwards;
+}
+
+@keyframes animNotif {
+    0%   {opacity: 0;}
+    10%  {opacity: 1;}
+    60%  {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+
 /* LOADER */
 .loader {
     border: 10px solid var(--loaderBg);
@@ -35,6 +48,7 @@ button {
     background-color: grey;
     cursor: pointer;
     border-radius: 25px;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
 }
 #toggle_daynight::after{
     content:'';
@@ -43,12 +57,12 @@ button {
     height: 15px;
     top: 2px;
     left: 2px;
-    background-color: white;
+    background-color: var(--mainBg);
     border-radius: 50%;
     transition: 0.1s ease-in;
 }
 
 #toggle_daynight:checked::after{
     transform: translateX(20px);
-    background-color: black;
+    background-color: var(--mainBg);
 }

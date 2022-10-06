@@ -1,23 +1,32 @@
 html{
     --mainBg: rgb(236, 236, 236);
+    --secondaryBg: rgb(216, 216, 216);
     --overlayBg: rgba(255,255,255, 0.5);
 
     --baseHighlightColor: rgb(215, 143, 0);
 
-    --loaderBg: #f3f3f3;
+    --loaderBg: rgba(0,0,0,0);
     --loaderHighlight: var(--baseHighlightColor);
 
     --navIndicatorHighlight: var(--baseHighlightColor);
     --navBottomLine: rgba(0,0,0,0.1);
 
     color: rgb(80,80,80);
+    --baseFontColor: rgb(80,80,80);
+    --fontDark: rgb(80,80,80);
+
+    --notifError: rgb(228, 86, 86);
+    --notifSuccess: rgb(81 193 111);
 }
 
 html[data-theme="dark"]{
-    color: rgb(230,230,230);
     --mainBg: rgb(28,28,34);
+    --secondaryBg:rgb(47, 47, 57);
     --overlayBg: rgba(0, 0, 0, 0.5);
-
+    
     --navBottomLine: rgba(255,255,255,0.1);
+
+    color: rgb(230,230,230);
+    --baseFontColor: rgb(230,230,230);
 }
   

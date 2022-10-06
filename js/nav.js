@@ -5,7 +5,7 @@ const mainContent = document.querySelector("body > main");
 
 //initialize the nav settings
 const navInit = ()=>{
-    app.page = 2;
+    app.page = 0;
     app.buttonList = navButtons.querySelectorAll("button");
     app.sectionList = mainContent.querySelectorAll("section");
 

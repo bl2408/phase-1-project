@@ -1,6 +1,8 @@
 const app = {
-
+    profile: {},
 };
+
+
 
 
 function fetchJson(){
