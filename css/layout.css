@@ -1,14 +1,16 @@
 :root{
-    --headerHei:    200px;
-    --navhei:       80px;
-    --mainHei:      calc(100vh - 280px);
-    --baseFontSize: 1.6rem;
+    --headerHei:            150px;
+    --navhei:               80px;
+    --navIndicatorHei:      4px;
+    --mainHei:              calc(100vh - 280px);
+    --baseFontSize:         1.6rem;
 }
 html, body{
     margin: 0;
     padding: 0;
-
     font-size: 62.5%;
+    font-family: 'Space Mono';
+    background-color: var(--mainBg);
 }
 
 body > * {
@@ -23,7 +25,7 @@ body > * {
     width: 100vw;
     height: 100vh;
 
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlayBg);
 
     display: flex;
     justify-content: center;
@@ -31,6 +33,8 @@ body > * {
     flex-direction: column;
 
     visibility: hidden;
+
+    backdrop-filter: blur(3px);
 }
 
 #overlay > .caption{
@@ -40,7 +44,6 @@ body > * {
 
 header, nav{
     width: 100vw;
-    border: solid 1px green;
     box-sizing: border-box;
 }
 
@@ -48,10 +51,46 @@ header, nav{
 header{
     height: var(--headerHei);
 }
+#header-nav{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 
 /* NAV */
 nav{
     height: var(--navhei);
+    border-bottom: solid 2px var(--navBottomLine);
+}
+
+#nav-buttons{
+    width:100%;
+    height: calc(100% - var(--navIndicatorHei));
+    display: flex;
+}
+#nav-buttons > * {
+    flex-grow: 1;
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    font-weight: bold;
+}
+
+#nav-buttons > .active{
+    color: var(--baseHighlightColor);
+}
+
+#nav-highlight{
+    width:100%;
+    height: var(--navIndicatorHei);
+    position: relative;
+    overflow: hidden;
+}
+#nav-indicator{
+    height:100%;
+    background-color: var(--navIndicatorHighlight);
+    position: absolute;
+    transition: left 0.3s ease-out;
 }
 
 
@@ -59,19 +98,33 @@ nav{
 main{
     display: flex;
     flex-wrap: nowrap;
-    overflow-x: auto;
+    min-height: 200px;
     height: var(--mainHei);
     width: 100vw;
+
+    overflow-x:auto;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+    
     scroll-snap-type: x mandatory;
+    scroll-snap-align: center;
+    -webkit-overflow-scrolling: touch;
+
+    padding-top: 15px;
+    box-sizing: border-box;
+}
+
+main::-webkit-scrollbar {
+    display: none;
 }
 main > section{
     flex: 0 0 auto;
     width: 100%;
     height: 100%;
-    border: solid 1px green;
     box-sizing: border-box;
     scroll-snap-align: start;
 }
+
 
 /* CLASSES */
 .flex-center{
@@ -82,6 +135,5 @@ main > section{
     min-width: 320px;
     width: 100%;
     max-width: 800px;
-    border: solid 1px green;
 }
 

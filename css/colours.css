@@ -1,0 +1,23 @@
+html{
+    --mainBg: rgb(236, 236, 236);
+    --overlayBg: rgba(255,255,255, 0.5);
+
+    --baseHighlightColor: rgb(215, 143, 0);
+
+    --loaderBg: #f3f3f3;
+    --loaderHighlight: var(--baseHighlightColor);
+
+    --navIndicatorHighlight: var(--baseHighlightColor);
+    --navBottomLine: rgba(0,0,0,0.1);
+
+    color: rgb(80,80,80);
+}
+
+html[data-theme="dark"]{
+    color: rgb(230,230,230);
+    --mainBg: rgb(28,28,34);
+    --overlayBg: rgba(0, 0, 0, 0.5);
+
+    --navBottomLine: rgba(255,255,255,0.1);
+}
+  
