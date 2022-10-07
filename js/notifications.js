@@ -59,29 +59,28 @@ const notifItem = ({msg, theme}) =>{
     const themeList = {
         general: {
             icon: 'fa-info-circle',
-            elClass: ''
+            elClass: '',
+            startText: "Information:"
         },
         error: {
             icon: 'fa-times-circle',
-            elClass: 'notif-error'
+            elClass: 'notif-error',
+            startText: "Error:"
         },
         success: {
             icon: 'fa-check-circle-o',
-            elClass: 'notif-success'
+            elClass: 'notif-success',
+            startText: "Success:"
         }
     };
 
     return `
-    <div class="notif-item ${themeList[theme].elClass}">
+    <div class="notif-item display-box1 ${themeList[theme].elClass}">
         <div>
             <i class="fa ${themeList[theme].icon}"></i>
         </div>
-        <div>${msg}</div>
+        <div><b>${themeList[theme].startText}</b><br>${msg}</div>
         <div class="notif-close"><i class="fa fa-times"></i></div>
     </div>
     `;
 };
-
-createNotif({msg: "Hello msg"});
-createNotif({msg: "Success msg", theme: "success"});
-createNotif({msg: "Error msg", theme: "error"});

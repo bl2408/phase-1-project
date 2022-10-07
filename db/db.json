@@ -1,0 +1,22 @@
+{
+  "profiles": [
+    {
+      "id": 1,
+      "name": "Brian",
+      "settings": {
+        "startPage": 2,
+        "theme": "dark"
+      },
+      "watchList": []
+    },
+    {
+      "name": "Christine",
+      "settings": {
+        "startPage": 0,
+        "theme": ""
+      },
+      "watchList": [],
+      "id": 2
+    }
+  ]
+}

@@ -17,18 +17,19 @@ body > * {
     font-size: var(--baseFontSize);
 }
 
+/* NOTIFICATIONS */
 #notification-bar{
     width: 100vw;
-    height: 80px;
+    min-height: 80px;
 
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 
     font-size: 1.4rem;
     padding: 10px;
     box-sizing: border-box;
-    z-index: 2;
+    z-index: 3;
 
     overflow: hidden;
 
@@ -43,21 +44,13 @@ body > * {
 
 .notif-item{
     width: 100%;
-    background-color: var(--secondaryBg);
     height: 100%;
-
-    border-radius: 10px;
-    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.1);
-    color: var(--baseFontColor);
-
-    padding: 5px 10px;
-    box-sizing: border-box;
 
     display: grid;
     grid-template-columns: 50px 1fr 40px;
-
-    pointer-events: all;
+    gap:10px;
 }
+
 .notif-item > :first-child{
     font-size: 3.2rem;
 }
@@ -80,8 +73,9 @@ body > * {
     background-color: var(--notifSuccess) !important;
 }
 
-#overlay{
-    position: absolute;
+
+#loader-box, #overlay {
+    position: fixed;
     top:0;
     left: 0;
 
@@ -96,14 +90,33 @@ body > * {
     flex-direction: column;
 
     visibility: hidden;
+    overflow: auto;
 
     backdrop-filter: blur(3px);
 }
 
-#overlay > .caption{
+/* OVERLAY */
+#overlay{
+    z-index: 1;
+}
+
+#general-box{
+    max-width: 600px;
+    min-height: 250px;
+    max-height: 80vh;
+    padding-bottom: 20px;
+}
+
+/* LOADER */
+#loader-box{
+    z-index: 2;
+}
+#loader-box > .caption{
     font-size: 1.6rem;
     font-style: italic;
 }
+
+
 
 header, nav{
     width: 100vw;
@@ -116,8 +129,8 @@ header{
 }
 #header-nav{
     width: 100%;
-    display: flex;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
 }
 
 /* NAV */
@@ -189,6 +202,39 @@ main > section{
     scroll-snap-align: start;
 }
 
+/* Login */
+#display-login{
+    height: 100%;
+    display: none;
+    grid-template-rows: max-content max-content 1fr max-content;
+    justify-content: center;
+    text-align: center;
+    width: 100vw;
+    max-width: 300px;
+    gap: 10px;
+}
+
+#login-profiles, #create-profile-form{
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+#login-profiles > * {
+    margin: 10px 0;
+    width: 100%;
+    display: block;
+}
+
+#display-create-profile{
+    height: 100%;
+    display: none;
+    grid-template-rows: max-content 1fr max-content;
+    justify-content: center;
+    text-align: center;
+    width: 100vw;
+    max-width: 300px;
+    gap: 10px;
+}
 
 /* CLASSES */
 .flex-center{
@@ -201,5 +247,25 @@ main > section{
     min-width: 320px;
     width: 100%;
     max-width: 800px;
+}
+
+.display-box1{
+    background-color: var(--secondaryBg);
+    border-radius: 10px;
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.1);
+    color: var(--baseFontColor);
+    padding: 5px 10px;
+    box-sizing: border-box;
+    pointer-events: all;
+}
+
+.btn{
+    border: none;
+    background-color: var(--mainBg);
+    border-radius: 10px;
+    padding: 6px 10px;
+}
+.btn:hover{
+    background-color: var(--baseHighlightColor);    
 }
 

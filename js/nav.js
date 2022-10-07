@@ -2,6 +2,7 @@ const nav = document.querySelector("body > nav");
 const navButtons = document.querySelector("#nav-buttons");
 const navIndicator = document.querySelector("#nav-indicator");
 const mainContent = document.querySelector("body > main");
+const btnTheme = document.querySelector("#header-nav > input[type=checkbox]");
 
 //initialize the nav settings
 const navInit = ()=>{
@@ -38,15 +39,29 @@ const navInit = ()=>{
     });
 
     //day/night mode button
-    document.querySelector("#header-nav > input[type=checkbox]").addEventListener("click", e=>{
-        document.querySelector("html").setAttribute('data-theme', e.target.checked ? "dark" : "");
+    btnTheme.addEventListener("click", e=>{
+        setTheme();
     });
 };
 navInit();
 
+const setTheme =(theme)=>{
+    const html = document.querySelector("html")
+    if(theme !== null){
+        html.setAttribute('data-theme', theme);
+        btnTheme.checked = theme === "dark" ? true : false;
+        return;
+    }
+    html.setAttribute('data-theme', btnTheme.checked ? "dark" : "");
+};
+
 //scrolls the main section content
 const sectionMove=()=>{
-    app.sectionList[app.page].scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+    //app.sectionList[app.page].scrollIntoView({behavior: "smooth"});
+    mainContent.scrollBy({top: 0,
+        left: app.sectionList[app.page].getBoundingClientRect().left,
+        behavior: 'smooth'
+    });
 };
 sectionMove();
 

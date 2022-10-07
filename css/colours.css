@@ -1,6 +1,6 @@
 html{
-    --mainBg: rgb(236, 236, 236);
-    --secondaryBg: rgb(216, 216, 216);
+    --mainBg: rgb(226, 226, 226);
+    --secondaryBg: rgb(246, 246, 246);
     --overlayBg: rgba(255,255,255, 0.5);
 
     --baseHighlightColor: rgb(215, 143, 0);

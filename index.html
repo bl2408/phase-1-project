@@ -14,25 +14,72 @@
     <script defer src="./js/nav.js"></script>
     <script defer src="./js/notifications.js"></script>
 
+    <link rel="stylesheet" href="./css/colours.css">
     <link rel="stylesheet" href="./css/layout.css">
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/colours.css">
 </head>
 <body>
+    <!-- notification bar -->
     <div id="notification-bar">
-        <div class="container-width">
-            
+        <div class="container-width"> 
         </div>
     </div>
-    <div id="overlay">
+
+    <!-- Loader box -->
+    <div id="loader-box">
         <div class="loader"></div>
         <div class="caption">LOADING</div>
     </div>
+
+    <!-- overlay -->
+    <div id="overlay">
+        <div id="general-box" class="display-box1">
+            <div id="display-login">
+                <div><h1>Login</h1></div>
+                <div>Select a profile</div>
+                <div id="login-profiles">
+                </div>
+                <div>
+                    <button id="btn-create-profile" class="btn">Create</button>
+                </div>
+            </div>
+            <div id="display-create-profile">
+                <div><h1>Create Profile</h1></div>
+                <div id="create-profile-form">
+                    <form id="form-create-profile">
+                        <label for="inputName">Name:</label>
+                        <input type="text" name="inputName" id="inputName">
+
+                        <label for="selectTheme">Theme:</label>
+                        <select name="selectTheme" id="selectTheme">
+                            <option value="">Normal</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </form>
+                </div>
+                <div>
+                    <button id="btn-create-save" class="btn">Save</button>
+                    <button id="btn-create-back" class="btn">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- header -->
     <header class="flex-center">
         <div class="container-width">
-            <div id="header-nav"><input type="checkbox" id="toggle_daynight"></div>
+            <div id="header-nav">
+                <input type="checkbox" id="toggle_daynight">
+                <div></div>
+                <div>
+                    <button id="btn-settings"><i class="fa fa-user-circle-o"></i></button>
+                    <button id="btn-logout"><i class="fa fa-sign-out"></i></button>
+                </div>
+            </div>
         </div>
     </header>
+
+    <!-- nav -->
     <nav class="flex-center">
         <div class="container-width">
             <div id="nav-buttons">
@@ -45,6 +92,8 @@
             </div>
         </div>
     </nav>
+    
+    <!-- main -->
     <main>
         <!-- section -->
         <section class="flex-center">
