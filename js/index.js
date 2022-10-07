@@ -6,8 +6,10 @@ const btnCreateProfile = document.querySelector("#btn-create-profile");
 const btnBackProfiles = document.querySelector("#btn-create-back");
 const btnSaveProfile = document.querySelector("#btn-create-save");
 const btnLogout = document.querySelector("#btn-logout");
+const btnSettings = document.querySelector("#btn-settings");
 const displayLogin = document.querySelector("#display-login");
 const displayCreateProfile = document.querySelector("#display-create-profile");
+const formProfile = document.querySelector("#form-create-profile");
 
 
 const app = {
@@ -18,6 +20,7 @@ const loadApp = (json)=>{
     resetDisplays();
     toggleElVis(loader, true);
 
+    //resets the app to defaults - used for logging out
     if(!json){
         json = {
             name: "",
@@ -44,6 +47,7 @@ const loadProfile = (profileId, profileObj = {})=>{
 
     if(profileId === -1){
         if(profileObj.name){
+            profileObj.id = profileId;
             loadApp(profileObj);
         }else{
             getProfiles();
@@ -118,6 +122,31 @@ const init=()=>{
     resetDisplays();
     getProfiles();
 
+    btnSettings.addEventListener("click",()=>{
+        if(app.profile.id === -1){
+            createNotif({msg:"No settings for offline profile.", theme: "error"});
+            return;
+        }else{
+            displayCreateProfile.dataset.id = app.profile.id;
+        }
+        displayCreateProfile.dataset.mode = "edit";
+
+
+        formProfile.inputName.value = app.profile.name;
+        formProfile.selectStartpage.value = app.profile.settings.startPage;
+
+        [...formProfile.selectTheme.children].forEach(cOpt =>{
+            if(cOpt.value === app.profile.settings.theme){
+                cOpt.selected = true;
+            }
+        });
+
+
+        toggleElDisplay(displayLogin, "none");
+        toggleElDisplay(displayCreateProfile, "grid");
+        toggleElVis(overlay, true);
+    });
+
     btnLogout.addEventListener("click",()=>{
         loadApp();
         getProfiles();
@@ -127,37 +156,43 @@ const init=()=>{
         resetDisplays();
         toggleElDisplay(displayLogin, "none");
         toggleElDisplay(displayCreateProfile, "grid");
+        displayCreateProfile.dataset.mode = "add";
         toggleElVis(overlay, true);
     });
 
     btnBackProfiles.addEventListener("click", ()=>{
-        resetDisplays();
-        getProfiles();
+        if(displayCreateProfile.dataset.mode == "edit"){
+            resetDisplays();
+        }else{
+            resetDisplays();
+            getProfiles();
+        }
     });
 
     btnSaveProfile.addEventListener("click", ()=>{
         
-        const form = document.querySelector("#form-create-profile");
-        const profileName = form.inputName.value;
+        const mode = displayCreateProfile.dataset.mode;
+        
+        const profileName = formProfile.inputName.value;
         if(!profileName){
             createNotif({msg:"Please use a valid name.", theme:"error"});
             return;
         }
-
+        
         toggleElVis(loader, true);
 
         const tempProfile = {     
             name: profileName,
             settings: {
-                startPage: 0,
-                theme: form.selectTheme.value
-            },
-            watchList: []
-            
+                startPage: formProfile.selectStartpage.value,
+                theme: formProfile.selectTheme.value
+            },            
         };
 
-        fetch(dbEndpoint.profiles(),{
-            method: "POST",
+        const ep = mode === "edit" ? dbEndpoint.profile(parseInt(displayCreateProfile.dataset.id)): dbEndpoint.profiles();
+
+        fetch(ep,{
+            method: mode === "edit" ? "PUT" : "POST",
             headers:{
                 "Content-type": "application/json",
                 "Accepts": "application/json"
@@ -167,16 +202,16 @@ const init=()=>{
         .then(res=> res.json())
         .then(json =>{
             if(json.id){
-                createNotif({msg:"Profile successfully created!", theme:"success"});
-                loadProfile(-1, json);
+                createNotif({msg:`Profile successfully ${(mode === "edit" ? "updated": "created")}!`, theme:"success"});
+                loadProfile(mode === "edit" ? parseInt(displayCreateProfile.dataset.id) : -1, json);
             }else{
-                createNotif({msg:"Failed to create profile", theme:"error"});
+                createNotif({msg:`Failed to ${(mode === "edit" ? "update": "create")} profile`, theme:"error"});
             }
             toggleElVis(loader, false);
         })
         .catch(error=>{
-            createNotif({msg:"No connection to database, temp profile created!"});
-            loadProfile(-1, tempProfile);
+            createNotif({msg:`No connection to database${(mode === "edit" ? ", failed to update!": "! Temp profile created")}`});
+            loadProfile(mode === "edit" ? parseInt(displayCreateProfile.dataset.id) : -1, tempProfile);
         });
         
     });
