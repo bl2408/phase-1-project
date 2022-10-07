@@ -40,7 +40,7 @@ const navInit = ()=>{
 
     //day/night mode button
     btnTheme.addEventListener("click", e=>{
-        setTheme();
+        setTheme(null);
     });
 };
 navInit();
