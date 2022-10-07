@@ -38,6 +38,8 @@ const loadApp = (json)=>{
     app.theme = json.settings.theme;
     setTheme(app.theme);
 
+    btnSettings.querySelector("#btn-settings-name").innerHTML = `${json.name}`;
+
     toggleElVis(loader, false);
 };
 

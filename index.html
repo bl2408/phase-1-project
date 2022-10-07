@@ -46,7 +46,7 @@
             <div id="display-create-profile" data-mode="add" data-id="-1">
                 <div><h1>Create Profile</h1></div>
                 <div id="create-profile-form">
-                    <form id="form-create-profile">
+                    <form id="form-create-profile" onsubmit="event.preventDefault();">
                         <label for="inputName">Name:</label>
                         <input type="text" name="inputName" id="inputName">
 
@@ -77,15 +77,20 @@
         <div class="container-width">
             <div id="header-nav">
                 <input type="checkbox" id="toggle_daynight">
-                <div></div>
                 <div>
-                    <button id="btn-settings"><i class="fa fa-user-circle-o"></i></button>
+                     <!-- status details here  -->
+                </div>
+                <div>
+                    <button id="btn-settings">
+                        <span id="btn-settings-name"></span>
+                        <i class="fa fa-user-circle-o"></i>
+                    </button>
                     <button id="btn-logout"><i class="fa fa-sign-out"></i></button>
                 </div>
             </div>
         </div>
     </header>
-
+    
     <!-- nav -->
     <nav class="flex-center">
         <div class="container-width">
