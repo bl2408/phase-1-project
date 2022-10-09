@@ -239,6 +239,19 @@ main > section{
     gap: 10px;
 }
 
+/* FORM */
+#form-create-profile{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    font-size: 2rem;
+}
+
+#form-create-profile input, #form-create-profile select{
+    font-size: 2rem;
+    font-family: inherit;
+}
+
 /* CLASSES */
 .flex-center{
     display: flex;
