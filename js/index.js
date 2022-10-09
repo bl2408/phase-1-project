@@ -1,6 +1,9 @@
 const loader = document.querySelector("#loader-box");
 const overlay = document.querySelector("#overlay");
 
+const statusApi = document.querySelector("#status-api");
+const statusDb = document.querySelector("#status-db");
+
 //login/profile
 const btnCreateProfile = document.querySelector("#btn-create-profile");
 const btnBackProfiles = document.querySelector("#btn-create-back");
@@ -91,19 +94,39 @@ const renderProfiles =(json = null)=>{
 
 //fetches profiles from the db endpoint
 const getProfiles=()=>{
+    
     toggleElVis(loader, true);
     fetch(dbEndpoint.profiles())
     .then(res=>res.json())
     .then(json=>{
         renderProfiles(json);
         toggleElVis(loader, false);
+        updateStatusLight(statusDb, "Database", 1);
     })
     .catch(error=>{
         createNotif({msg: "Failed to get profiles from database.", theme:"error"});
         toggleElVis(loader, false);
+        updateStatusLight(statusDb, "Database", 2);
         renderProfiles();
     });
     
+};
+
+const updateStatusLight =(item, type, status = 0)=>{
+    switch(status){
+        case 0: // nothing
+            item.style.color = null;
+            item.setAttribute("title", `Status: ${type[0].toUpperCase()}.`);
+        break;
+        case 1: //ok
+            item.style.color = "green";
+            item.setAttribute("title", `Status: Connected to ${type}.`);
+        break;
+        case 2://failed
+            item.style.color = "red";
+            item.setAttribute("title", `Status: Failed to connected to ${type}.`);
+        break;
+    }
 };
 
 const toggleElVis=(el, bool)=>{

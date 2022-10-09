@@ -1,8 +1,8 @@
 :root{
-    --headerHei:            30px;
+    --headerHei:            40px;
     --navhei:               80px;
     --navIndicatorHei:      4px;
-    --mainHei:              calc(100vh - 110px);
+    --mainHei:              calc(100vh - 120px);
     --baseFontSize:         1.6rem;
 }
 html, body{
@@ -250,6 +250,15 @@ main > section{
 #form-create-profile input, #form-create-profile select{
     font-size: 2rem;
     font-family: inherit;
+}
+
+#status-connection{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+    box-sizing: border-box;
+    gap: 20px;
 }
 
 /* CLASSES */
