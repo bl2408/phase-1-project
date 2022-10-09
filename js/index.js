@@ -14,6 +14,10 @@ const displayLogin = document.querySelector("#display-login");
 const displayCreateProfile = document.querySelector("#display-create-profile");
 const formProfile = document.querySelector("#form-create-profile");
 
+//search section
+const btnSearch = document.querySelector("#btn-search");
+const searchResults = document.querySelector("#search-area-results");
+
 
 const app = {
     profile: {},
@@ -43,6 +47,7 @@ const loadApp = (json)=>{
 
     btnSettings.querySelector("#btn-settings-name").innerHTML = `${json.name}`;
 
+    checkApi();
     toggleElVis(loader, false);
 };
 
@@ -239,6 +244,16 @@ const init=()=>{
             loadProfile(mode === "edit" ? parseInt(displayCreateProfile.dataset.id) : -1, tempProfile);
         });
         
+    });
+
+    btnSearch.addEventListener("click", ()=>{
+        const field = document.querySelector("#inputSearch");
+        if(!field.value){
+            createNotif({msg: "Search field must not be empty.", theme:"error"});
+            return;
+        }
+
+        searchApi(field.value);
     });
 
 };

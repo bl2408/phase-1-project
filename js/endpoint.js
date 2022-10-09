@@ -18,5 +18,8 @@ const dataEndpoint = {
     },
     coinInfo: function(id = "bithashex"){
         return `${this.base}/coins/${id}`;
+    },
+    search: function(term){
+        return `${this.base}/search/?query=${term}`;
     }
 };

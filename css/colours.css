@@ -3,7 +3,8 @@ html{
     --secondaryBg: rgb(246, 246, 246);
     --overlayBg: rgba(255,255,255, 0.5);
 
-    --baseHighlightColor: rgb(215, 143, 0);
+    --baseHighlightColor: rgb(255, 170, 1);
+    --secondaryHighlightColor: rgb(255, 196, 79);
 
     --loaderBg: rgba(0,0,0,0);
     --loaderHighlight: var(--baseHighlightColor);
