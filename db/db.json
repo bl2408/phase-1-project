@@ -1,21 +1,46 @@
 {
   "profiles": [
     {
-      "id": 1,
       "name": "Brian",
       "settings": {
-        "startPage": 2,
+        "startPage": "2",
         "theme": "dark"
       },
-      "watchList": []
+      "watchList": [
+        {
+          "thumb": "https://assets.coingecko.com/coins/images/5/thumb/dogecoin.png",
+          "symbol": "dogecoin",
+          "name": "Dogecoin",
+          "mktRank": 10
+        },
+        {
+          "thumb": "https://assets.coingecko.com/coins/images/16125/thumb/Baby_Doge.png",
+          "symbol": "baby-doge-coin",
+          "name": "Baby Doge Coin",
+          "mktRank": 163
+        },
+        {
+          "thumb": "https://assets.coingecko.com/coins/images/14962/thumb/6GxcPRo3_400x400.jpg",
+          "symbol": "dogelon-mars",
+          "name": "Dogelon Mars",
+          "mktRank": 203
+        }
+      ],
+      "watchListKeys": [
+        "dogecoin",
+        "baby-doge-coin",
+        "dogelon-mars"
+      ],
+      "id": 1
     },
     {
       "name": "Christine",
       "settings": {
-        "startPage": 0,
+        "startPage": "1",
         "theme": ""
       },
       "watchList": [],
+      "watchListKeys": [],
       "id": 2
     }
   ]

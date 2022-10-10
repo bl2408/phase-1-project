@@ -300,11 +300,10 @@ main > section{
     height: 90%;
     overflow: auto;
 }
-#search-area-results > .search-item:nth-child(odd){
+#search-area-results > .coin-item:nth-child(odd){
     background-color: rgba(0, 0, 0, 0.1);
 }
-
-#search-area-results > .search-item:hover{
+#search-area-results > .coin-item:hover{
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -342,16 +341,19 @@ main > section{
     background-color: var(--baseHighlightColor);    
 }
 
+.coin-item-headers{
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.25);
+}
 
-
-.search-item{
+.coin-item, .coin-item-headers{
     display: grid;
-    grid-template-columns: 25px 1fr 0.2fr 40px;
+    grid-template-columns: 25px 1fr 0.2fr 80px;
     gap: 20px;
     box-sizing: border-box;
     padding: 10px 0 10px 5px;
 }
-.search-item img{
+.coin-item img{
     max-height: 100%;
     max-width: 100%;
 }

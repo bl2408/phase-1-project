@@ -1,3 +1,5 @@
+let itemsStore = {};
+
 //checks if the api response is ok and updates the status of the icon
 const checkApi =()=>{
     fetch(dataEndpoint.ping())
@@ -12,6 +14,7 @@ const checkApi =()=>{
     });
 };
 
+//search the api and display data
 const searchApi =(term)=>{
     toggleElVis(loader, true);
     fetch(dataEndpoint.search(term))
@@ -24,23 +27,32 @@ const searchApi =(term)=>{
             const sorted = json.coins.sort((a, b)=> a.market_cap_rank - b.market_cap_rank);
 
             searchResults.innerHTML = `
-                <div class="search-item">
+                <div class="coin-item-headers">
                     <div></div>
                     <div>Name</div>
-                    <div>Mkt No.</div>
+                    <div>Mkt Rank.</div>
                     <div></div>
                 </div>`;
 
+            itemsStore = {};
             sorted.forEach(coin => {
                 if(!coin.market_cap_rank){ return; }
                 if(anyDisplayed === false){ anyDisplayed = true; }
 
+                //store results in item store
+                itemsStore[coin.api_symbol] = {
+                    thumb: coin.thumb,
+                    symbol: coin.api_symbol,
+                    name: coin.name,
+                    mktRank: coin.market_cap_rank
+                }
+
                 searchResults.innerHTML += `
-                <div class="search-item">
+                <div class="coin-item" onclick='itemClick(this, "${coin.api_symbol}");'>
                     <div><img src="${coin.thumb}" alt="${coin.api_symbol}"/></div>
                     <div>${coin.name}</div>
                     <div>${coin.market_cap_rank}</div>
-                    <div>ADD</div>
+                    <div class="itemWatching">${isWatched(coin.api_symbol) ? "UNWATCH" : "WATCH"}</div>
                 </div>`;
             });
             if(!anyDisplayed){
@@ -49,4 +61,49 @@ const searchApi =(term)=>{
         }
         toggleElVis(loader, false);
     });
+};
+
+//check if the user is watching the particular item
+const isWatched = (key)=>{
+    return app.profile.watchListKeys.filter(watch => watch === key).length > 0;
+};
+
+const itemClick=(target, key)=>{
+    let type = "";
+    if(!isWatched(key)){
+        target.querySelector(".itemWatching").innerHTML = "UNWATCH";
+        app.profile.watchList.push(itemsStore[key]);
+        app.profile.watchListKeys.push(key);
+        type = "adding";
+    }else{
+        target.querySelector(".itemWatching").innerHTML = "WATCH";
+        app.profile.watchListKeys.splice(app.profile.watchListKeys.indexOf(key), 1);
+        app.profile.watchList.splice(
+           app.profile.watchList.indexOf(app.profile.watchList.find(item=>item.symbol === key)), 
+           1
+        );
+        type = "removing";
+    }
+    toggleElVis(loader, true);
+    fetch(dbEndpoint.profile(app.profile.id), {
+        method: "PUT",
+        headers:{
+            "Content-type": "application/json",
+            "Accepts": "application/json"
+        },
+        body: JSON.stringify({
+            ...app.profile,
+            watchList: app.profile.watchList,
+            watchListKeys: app.profile.watchListKeys
+        })
+    })
+    .then(res=>res.json())
+    .then(json=>{
+        toggleElVis(loader, false);
+    })
+    .catch(err=>{
+        createNotif({msg:`Error ${type} ${itemsStore[key].name} to profile.`});
+        toggleElVis(loader, false);
+    });
+
 };

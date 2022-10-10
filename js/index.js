@@ -216,7 +216,9 @@ const init=()=>{
             settings: {
                 startPage: formProfile.selectStartpage.value,
                 theme: formProfile.selectTheme.value
-            },            
+            },
+            watchList: [],
+            watchListKeys: []     
         };
 
         const ep = mode === "edit" ? dbEndpoint.profile(parseInt(displayCreateProfile.dataset.id)): dbEndpoint.profiles();
@@ -255,6 +257,13 @@ const init=()=>{
 
         searchApi(field.value);
     });
+/*
+    document.addEventListener("click",e=>{
+        console.log(e.target);
+        if(e.target.classList.contains("search-item")){
+            console.log(e.target.dataset.info);
+        }
+    });*/
 
 };
 init();
