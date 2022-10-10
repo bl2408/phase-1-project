@@ -1,3 +1,4 @@
+//internal endpoint object - Database
 const dbEndpoint = {
     base: ` http://localhost:3000`,
     profiles: function(){
@@ -8,6 +9,7 @@ const dbEndpoint = {
     },
 };
 
+//external endpoint object - coingecko
 const dataEndpoint = {
     base: `https://api.coingecko.com/api/v3`,
     ping: function(){
@@ -16,9 +18,6 @@ const dataEndpoint = {
     coinsList: function(){
         return `${this.base}/coins/list/`;
     },
-    // coinInfo: function(id = "bithashex"){
-    //     return `${this.base}/coins/${id}`;
-    // },
     trending: function(){
         return `${this.base}/search/trending`;
     },

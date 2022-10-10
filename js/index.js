@@ -25,13 +25,14 @@ const btnSearch = document.querySelector("#btn-search");
 const searchResults = document.querySelector("#section-search .item-area-results");
 const searchInput = document.querySelector("#inputSearch");
 
-
+//app object
 const app = {
     profile: {},
     trendingTime: 60000, // 1min refresh for trending
     trendingChecked: 0,
 };
 
+//loads and sets the app
 const loadApp = (json)=>{
     resetDisplays();
     toggleElVis(loader, true);
@@ -48,8 +49,12 @@ const loadApp = (json)=>{
     }
 
     app.profile = json;
-    app.page = json.settings.startPage;
+    app.page = parseInt(json.settings.startPage);
     sectionMove();
+
+    if(app.page === 0){ // will refresh first section if it is starting page
+        refreshSection();
+    }
     
     app.theme = json.settings.theme;
     setTheme(app.theme);

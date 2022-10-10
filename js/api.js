@@ -14,13 +14,17 @@ const checkApi =()=>{
     });
 };
 
+//sort coins by marketcap
 const sortMarketCap = (arr)=>{
     return arr.sort((a, b)=> a.market_cap_rank - b.market_cap_rank);
 };
 
+
+//call the trending api and display in section
 const getTrending =()=>{
     toggleElVis(loader, true);
 
+    //check the time since last refresh - prevent spamming API
     if(app.trendingChecked === 0){
         app.trendingChecked = new Date().getTime();
     }else{
@@ -30,6 +34,7 @@ const getTrending =()=>{
             return;
         }
     }
+
 
     fetch(dataEndpoint.trending())
     .then(res=>res.json())
@@ -118,6 +123,7 @@ const searchApi =(term)=>{
     });
 };
 
+//toggles the watch icons
 const toggleWatchIcons = (bool) =>{
     return bool ? "fa-eye" : "fa-eye-slash";
 };
@@ -127,11 +133,11 @@ const isWatched = (key)=>{
     return app.profile.watchListKeys.filter(watch => watch === key).length > 0;
 };
 
+//when a item is click, it will toggle the watch icon and add the item to the users watchlist
+//if offline profile it will still add to the watchlist but not save to db
 const itemClick=(target, key)=>{
     let type = "";
     const isWatch = isWatched(key);
-
-    //console.log(toggleWatchIcons(isWatch));
 
     target.querySelector(".itemWatching").children[0].classList.add(toggleWatchIcons(isWatch));
     target.querySelector(".itemWatching").children[0].classList.remove(toggleWatchIcons(!isWatch));

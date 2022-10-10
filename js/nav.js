@@ -23,11 +23,13 @@ const navInit = ()=>{
         //sets the current page based of the percentage
         app.page = Math.min(Math.floor(app.buttonList.length * percentage), (app.buttonList.length-1));
 
+        //timer for section - will refresh section after 7ms 
         if(app.lockPage !== app.page){
             sectionTimer = setTimeout(refreshSection, 700);
             app.lockPage = app.page;
         }
 
+        //sets the button to active for the current section
         app.buttonList.forEach(button=>{
             if([...app.buttonList].indexOf(button) === app.page){
                 button.classList.add("active");
@@ -52,6 +54,7 @@ const navInit = ()=>{
 };
 navInit();
 
+//sets the theme eg Light/Dark themes
 const setTheme =(theme)=>{
     const html = document.querySelector("html")
     if(theme !== null){
