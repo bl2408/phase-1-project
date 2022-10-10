@@ -150,22 +150,9 @@ const updateStatusLight =(item, type, status = 0)=>{
 
 //loads the users watchlist
 const loadWatchList = ()=>{
-    watchListResults.innerHTML = `
-    <div class="coin-item-headers">
-        <div></div>
-        <div>Name</div>
-        <div>Mkt Rank.</div>
-        <div>Watch</div>
-    </div>`;
-
+    watchListResults.innerHTML = "";
     app.profile.watchList.forEach(coin=>{
-        watchListResults.innerHTML += `
-            <div class="coin-item" onclick='itemClick(this, "${coin.symbol}");'>
-                <div><img src="${coin.thumb}" alt="${coin.symbol}"/></div>
-                <div>${coin.name}</div>
-                <div>${coin.mktRank}</div>
-                <div class="itemWatching"><i class="fa ${toggleWatchIcons(!isWatched(coin.symbol))}"></i></div>
-            </div>`;
+        watchListResults.innerHTML += displayItemTemplate(coin);
     });
 };
 
@@ -208,6 +195,16 @@ const resetSections =()=>{
     watchListResults.innerHTML = "";
     tredingResults.innerHTML = "";
     app.trendingChecked = 0;
+};
+
+//items template 
+const displayItemTemplate =({name, thumb, symbol, mktRank})=>{
+    return `<div class="coin-item" onclick='itemClick(this, "${symbol}");'>
+    <div><img src="${thumb}" alt="${symbol}"/></div>
+    <div>${name}</div>
+    <div>${mktRank}</div>
+    <div class="itemWatching"><i class="fa ${toggleWatchIcons(!isWatched(symbol))}"></i></div>
+</div>`;
 };
 
 //initialize app

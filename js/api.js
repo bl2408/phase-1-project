@@ -43,15 +43,9 @@ const getTrending =()=>{
         const coinArr = json.coins.map(obj=>obj.item);
         
         const sorted = sortMarketCap(coinArr);
-        tredingResults.innerHTML = `
-            <div class="coin-item-headers">
-                <div></div>
-                <div>Name</div>
-                <div>Mkt Rank.</div>
-                <div>Watch</div>
-            </div>`;
 
         itemsStore = {};
+        tredingResults.innerHTML = "";
         sorted.forEach(coin => {
             //store results in item store
             itemsStore[coin.id] = {
@@ -61,13 +55,7 @@ const getTrending =()=>{
                 mktRank: coin.market_cap_rank
             }
 
-            tredingResults.innerHTML += `
-            <div class="coin-item" onclick='itemClick(this, "${coin.id}");'>
-                <div><img src="${coin.thumb}" alt="${coin.id}"/></div>
-                <div>${coin.name}</div>
-                <div>${coin.market_cap_rank}</div>
-                <div class="itemWatching"><i class="fa ${toggleWatchIcons(!isWatched(coin.id))}"></i></div>
-            </div>`;
+            tredingResults.innerHTML += displayItemTemplate(itemsStore[coin.id]);
         });
         
         toggleElVis(loader, false);
@@ -86,13 +74,7 @@ const searchApi =(term)=>{
             let anyDisplayed =false; 
             const sorted = sortMarketCap(json.coins);
 
-            searchResults.innerHTML = `
-                <div class="coin-item-headers">
-                    <div></div>
-                    <div>Name</div>
-                    <div>Mkt Rank.</div>
-                    <div>Watch</div>
-                </div>`;
+            searchResults.innerHTML ="";
 
             itemsStore = {};
             sorted.forEach(coin => {
@@ -101,19 +83,13 @@ const searchApi =(term)=>{
 
                 //store results in item store
                 itemsStore[coin.api_symbol] = {
+                    name: coin.name,
                     thumb: coin.thumb,
                     symbol: coin.api_symbol,
-                    name: coin.name,
                     mktRank: coin.market_cap_rank
                 }
 
-                searchResults.innerHTML += `
-                <div class="coin-item" onclick='itemClick(this, "${coin.api_symbol}");'>
-                    <div><img src="${coin.thumb}" alt="${coin.api_symbol}"/></div>
-                    <div>${coin.name}</div>
-                    <div>${coin.market_cap_rank}</div>
-                    <div class="itemWatching"><i class="fa ${toggleWatchIcons(!isWatched(coin.api_symbol))}"></i></div>
-                </div>`;
+                searchResults.innerHTML += displayItemTemplate(itemsStore[coin.api_symbol]);
             });
             if(!anyDisplayed){
                 createNotif({msg: "No results found!"});
