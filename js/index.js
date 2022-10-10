@@ -14,6 +14,9 @@ const displayLogin = document.querySelector("#display-login");
 const displayCreateProfile = document.querySelector("#display-create-profile");
 const formProfile = document.querySelector("#form-create-profile");
 
+//treding
+const tredingResults = document.querySelector("#section-treding .item-area-results");
+
 //watchlist
 const watchListResults = document.querySelector("#section-watchlist .item-area-results");
 
@@ -25,6 +28,8 @@ const searchInput = document.querySelector("#inputSearch");
 
 const app = {
     profile: {},
+    trendingTime: 60000, // 1min refresh for trending
+    trendingChecked: 0,
 };
 
 const loadApp = (json)=>{
@@ -161,8 +166,11 @@ const loadWatchList = ()=>{
 
 //refreshes the section it is currently on
 const refreshSection=()=>{
+    if(app.profile.id === undefined  ){return ;}
+
     switch(app.page){
         case 0: //trending
+            getTrending();
         break;
         case 1: //watchlist
             loadWatchList();
@@ -172,12 +180,15 @@ const refreshSection=()=>{
     }
 };
 
+//toggle element visibility
 const toggleElVis=(el, bool)=>{
     el.style.visibility = bool ? "visible" : "hidden";
 };
+//toggle element display
 const toggleElDisplay=(el, dis="block")=>{
     el.style.display = dis;
 };
+//resets all overlays
 const resetDisplays =()=>{
     toggleElDisplay(displayLogin, "none");
     toggleElDisplay(displayCreateProfile, "none");
@@ -185,17 +196,21 @@ const resetDisplays =()=>{
     toggleElVis(loader, false);
 };
 
+//resets all sections
 const resetSections =()=>{
     searchResults.innerHTML = "";
     searchInput.value = "";
     watchListResults.innerHTML = "";
+    tredingResults.innerHTML = "";
+    app.trendingChecked = 0;
 };
 
-
+//initialize app
 const init=()=>{
     resetDisplays();
     getProfiles();
 
+    //settings button
     btnSettings.addEventListener("click",()=>{
         if(app.profile.id === -1){
             createNotif({msg:"No settings for offline profile.", theme: "error"});
@@ -221,12 +236,14 @@ const init=()=>{
         toggleElVis(overlay, true);
     });
 
+    //logout button
     btnLogout.addEventListener("click",()=>{
         loadApp();
         resetSections();
         getProfiles();
     });
 
+    //create profile button
     btnCreateProfile.addEventListener("click",()=>{
         resetDisplays();
         toggleElDisplay(displayLogin, "none");
@@ -235,6 +252,7 @@ const init=()=>{
         toggleElVis(overlay, true);
     });
 
+    //go back button - depends if logged in or not
     btnBackProfiles.addEventListener("click", ()=>{
         if(displayCreateProfile.dataset.mode == "edit"){
             resetDisplays();
@@ -244,6 +262,7 @@ const init=()=>{
         }
     });
 
+    //save profile button
     btnSaveProfile.addEventListener("click", ()=>{
         
         const mode = displayCreateProfile.dataset.mode;
@@ -293,6 +312,7 @@ const init=()=>{
         
     });
 
+    //search button
     btnSearch.addEventListener("click", ()=>{
         
         if(!searchInput.value){

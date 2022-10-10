@@ -24,7 +24,7 @@ const navInit = ()=>{
         app.page = Math.min(Math.floor(app.buttonList.length * percentage), (app.buttonList.length-1));
 
         if(app.lockPage !== app.page){
-            sectionTimer = setTimeout(refreshSection, 1000);
+            sectionTimer = setTimeout(refreshSection, 700);
             app.lockPage = app.page;
         }
 

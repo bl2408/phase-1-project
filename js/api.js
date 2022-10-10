@@ -14,6 +14,61 @@ const checkApi =()=>{
     });
 };
 
+const sortMarketCap = (arr)=>{
+    return arr.sort((a, b)=> a.market_cap_rank - b.market_cap_rank);
+};
+
+const getTrending =()=>{
+    toggleElVis(loader, true);
+
+    if(app.trendingChecked === 0){
+        app.trendingChecked = new Date().getTime();
+    }else{
+        const timeSinceCheck = new Date().getTime() - app.trendingChecked;
+        if(timeSinceCheck < app.trendingTime){ // 1min
+            toggleElVis(loader, false);
+            return;
+        }
+    }
+
+    fetch(dataEndpoint.trending())
+    .then(res=>res.json())
+    .then(json=>{
+
+        const coinArr = json.coins.map(obj=>obj.item);
+        
+        const sorted = sortMarketCap(coinArr);
+        tredingResults.innerHTML = `
+            <div class="coin-item-headers">
+                <div></div>
+                <div>Name</div>
+                <div>Mkt Rank.</div>
+                <div>Watch</div>
+            </div>`;
+
+        itemsStore = {};
+        sorted.forEach(coin => {
+            //store results in item store
+            itemsStore[coin.id] = {
+                thumb: coin.thumb,
+                symbol: coin.id,
+                name: coin.name,
+                mktRank: coin.market_cap_rank
+            }
+
+            tredingResults.innerHTML += `
+            <div class="coin-item" onclick='itemClick(this, "${coin.id}");'>
+                <div><img src="${coin.thumb}" alt="${coin.id}"/></div>
+                <div>${coin.name}</div>
+                <div>${coin.market_cap_rank}</div>
+                <div class="itemWatching"><i class="fa ${toggleWatchIcons(!isWatched(coin.id))}"></i></div>
+            </div>`;
+        });
+        
+        toggleElVis(loader, false);
+    });
+};
+
 //search the api and display data
 const searchApi =(term)=>{
     toggleElVis(loader, true);
@@ -24,7 +79,7 @@ const searchApi =(term)=>{
             createNotif({msg: "No results found!"});
         }else{
             let anyDisplayed =false; 
-            const sorted = json.coins.sort((a, b)=> a.market_cap_rank - b.market_cap_rank);
+            const sorted = sortMarketCap(json.coins);
 
             searchResults.innerHTML = `
                 <div class="coin-item-headers">
