@@ -4,6 +4,8 @@ const navIndicator = document.querySelector("#nav-indicator");
 const mainContent = document.querySelector("body > main");
 const btnTheme = document.querySelector("#header-nav > input[type=checkbox]");
 
+let sectionTimer;
+
 //initialize the nav settings
 const navInit = ()=>{
     app.page = 0;
@@ -20,6 +22,11 @@ const navInit = ()=>{
         
         //sets the current page based of the percentage
         app.page = Math.min(Math.floor(app.buttonList.length * percentage), (app.buttonList.length-1));
+
+        if(app.lockPage !== app.page){
+            sectionTimer = setTimeout(refreshSection, 1000);
+            app.lockPage = app.page;
+        }
 
         app.buttonList.forEach(button=>{
             if([...app.buttonList].indexOf(button) === app.page){

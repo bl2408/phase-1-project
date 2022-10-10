@@ -14,9 +14,13 @@ const displayLogin = document.querySelector("#display-login");
 const displayCreateProfile = document.querySelector("#display-create-profile");
 const formProfile = document.querySelector("#form-create-profile");
 
+//watchlist
+const watchListResults = document.querySelector("#section-watchlist .item-area-results");
+
 //search section
 const btnSearch = document.querySelector("#btn-search");
-const searchResults = document.querySelector("#search-area-results");
+const searchResults = document.querySelector("#section-search .item-area-results");
+const searchInput = document.querySelector("#inputSearch");
 
 
 const app = {
@@ -134,6 +138,40 @@ const updateStatusLight =(item, type, status = 0)=>{
     }
 };
 
+//loads the users watchlist
+const loadWatchList = ()=>{
+    watchListResults.innerHTML = `
+    <div class="coin-item-headers">
+        <div></div>
+        <div>Name</div>
+        <div>Mkt Rank.</div>
+        <div>Watch</div>
+    </div>`;
+
+    app.profile.watchList.forEach(coin=>{
+        watchListResults.innerHTML += `
+            <div class="coin-item" onclick='itemClick(this, "${coin.symbol}");'>
+                <div><img src="${coin.thumb}" alt="${coin.symbol}"/></div>
+                <div>${coin.name}</div>
+                <div>${coin.mktRank}</div>
+                <div class="itemWatching"><i class="fa ${toggleWatchIcons(!isWatched(coin.symbol))}"></i></div>
+            </div>`;
+    });
+};
+
+//refreshes the section it is currently on
+const refreshSection=()=>{
+    switch(app.page){
+        case 0: //trending
+        break;
+        case 1: //watchlist
+            loadWatchList();
+        break;
+        case 2: //search
+        break;
+    }
+};
+
 const toggleElVis=(el, bool)=>{
     el.style.visibility = bool ? "visible" : "hidden";
 };
@@ -145,6 +183,12 @@ const resetDisplays =()=>{
     toggleElDisplay(displayCreateProfile, "none");
     toggleElVis(overlay, false);
     toggleElVis(loader, false);
+};
+
+const resetSections =()=>{
+    searchResults.innerHTML = "";
+    searchInput.value = "";
+    watchListResults.innerHTML = "";
 };
 
 
@@ -179,6 +223,7 @@ const init=()=>{
 
     btnLogout.addEventListener("click",()=>{
         loadApp();
+        resetSections();
         getProfiles();
     });
 
@@ -249,21 +294,14 @@ const init=()=>{
     });
 
     btnSearch.addEventListener("click", ()=>{
-        const field = document.querySelector("#inputSearch");
-        if(!field.value){
+        
+        if(!searchInput.value){
             createNotif({msg: "Search field must not be empty.", theme:"error"});
             return;
         }
 
-        searchApi(field.value);
+        searchApi(searchInput.value);
     });
-/*
-    document.addEventListener("click",e=>{
-        console.log(e.target);
-        if(e.target.classList.contains("search-item")){
-            console.log(e.target.dataset.info);
-        }
-    });*/
 
 };
 init();

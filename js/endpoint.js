@@ -16,8 +16,11 @@ const dataEndpoint = {
     coinsList: function(){
         return `${this.base}/coins/list/`;
     },
-    coinInfo: function(id = "bithashex"){
-        return `${this.base}/coins/${id}`;
+    // coinInfo: function(id = "bithashex"){
+    //     return `${this.base}/coins/${id}`;
+    // },
+    trend: function(){
+        return `${this.base}/search/trending`;
     },
     search: function(term){
         return `${this.base}/search/?query=${term}`;

@@ -262,8 +262,8 @@ main > section{
     gap: 20px;
 }
 
-/* SEARCH SECTION */
-#section-search > .container-width{
+/* SEARCH / WATCHLIST SECTION */
+#section-search > .container-width, #section-watchlist > .container-width{
     position: relative;
     padding: 0 20px;
     box-sizing: border-box;
@@ -296,14 +296,14 @@ main > section{
 #search-area-bar button:hover{
     background-color: var(--secondaryHighlightColor);
 }
-#search-area-results {
+.item-area-results {
     height: 90%;
     overflow: auto;
 }
-#search-area-results > .coin-item:nth-child(odd){
+.item-area-results > .coin-item:nth-child(odd){
     background-color: rgba(0, 0, 0, 0.1);
 }
-#search-area-results > .coin-item:hover{
+.item-area-results > .coin-item:hover{
     background-color: rgba(0, 0, 0, 0.2);
 }
 

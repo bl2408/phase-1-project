@@ -31,7 +31,7 @@ const searchApi =(term)=>{
                     <div></div>
                     <div>Name</div>
                     <div>Mkt Rank.</div>
-                    <div></div>
+                    <div>Watch</div>
                 </div>`;
 
             itemsStore = {};
@@ -52,7 +52,7 @@ const searchApi =(term)=>{
                     <div><img src="${coin.thumb}" alt="${coin.api_symbol}"/></div>
                     <div>${coin.name}</div>
                     <div>${coin.market_cap_rank}</div>
-                    <div class="itemWatching">${isWatched(coin.api_symbol) ? "UNWATCH" : "WATCH"}</div>
+                    <div class="itemWatching"><i class="fa ${toggleWatchIcons(!isWatched(coin.api_symbol))}"></i></div>
                 </div>`;
             });
             if(!anyDisplayed){
@@ -63,6 +63,10 @@ const searchApi =(term)=>{
     });
 };
 
+const toggleWatchIcons = (bool) =>{
+    return bool ? "fa-eye" : "fa-eye-slash";
+};
+
 //check if the user is watching the particular item
 const isWatched = (key)=>{
     return app.profile.watchListKeys.filter(watch => watch === key).length > 0;
@@ -70,13 +74,18 @@ const isWatched = (key)=>{
 
 const itemClick=(target, key)=>{
     let type = "";
-    if(!isWatched(key)){
-        target.querySelector(".itemWatching").innerHTML = "UNWATCH";
+    const isWatch = isWatched(key);
+
+    //console.log(toggleWatchIcons(isWatch));
+
+    target.querySelector(".itemWatching").children[0].classList.add(toggleWatchIcons(isWatch));
+    target.querySelector(".itemWatching").children[0].classList.remove(toggleWatchIcons(!isWatch));
+
+    if(!isWatch){
         app.profile.watchList.push(itemsStore[key]);
         app.profile.watchListKeys.push(key);
         type = "adding";
     }else{
-        target.querySelector(".itemWatching").innerHTML = "WATCH";
         app.profile.watchListKeys.splice(app.profile.watchListKeys.indexOf(key), 1);
         app.profile.watchList.splice(
            app.profile.watchList.indexOf(app.profile.watchList.find(item=>item.symbol === key)), 
