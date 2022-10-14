@@ -203,13 +203,14 @@ const resetSections =()=>{
 //triggered by the button, it will fetch coin data based of the coin symbol and display it on the overlay
 const handleView =(e, sym)=>{
     e.stopPropagation();
-    console.log(sym);
+    toggleElVis(loader, true);
     fetch(dataEndpoint.coins(sym))
     .then(res=>res.json())
     .then(data=>{
         displayInfo.querySelector("#data-info").innerHTML = data.description.en;
         toggleElDisplay(displayInfo, "block");
         toggleElVis(overlay, true);
+        toggleElVis(loader, false);
     })
 };
 
