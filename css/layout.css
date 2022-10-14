@@ -306,6 +306,15 @@ main > section{
 .item-area-results > .coin-item:hover{
     background-color: rgba(0, 0, 0, 0.2);
 }
+#display-info{
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+#data-info{
+    max-height: 92%;
+    overflow: auto;
+}
 
 
 /* CLASSES */

@@ -18,6 +18,9 @@ const dataEndpoint = {
     coinsList: function(){
         return `${this.base}/coins/list/`;
     },
+    coins: function(id){
+        return `${this.base}/coins/${id}/`;
+    },
     trending: function(){
         return `${this.base}/search/trending`;
     },

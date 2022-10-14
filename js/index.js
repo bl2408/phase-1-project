@@ -14,6 +14,8 @@ const displayLogin = document.querySelector("#display-login");
 const displayCreateProfile = document.querySelector("#display-create-profile");
 const formProfile = document.querySelector("#form-create-profile");
 
+const displayInfo = document.querySelector("#display-info");
+
 //treding
 const tredingResults = document.querySelector("#section-treding .item-area-results");
 
@@ -184,6 +186,7 @@ const toggleElDisplay=(el, dis="block")=>{
 const resetDisplays =()=>{
     toggleElDisplay(displayLogin, "none");
     toggleElDisplay(displayCreateProfile, "none");
+    toggleElDisplay(displayInfo, "none");
     toggleElVis(overlay, false);
     toggleElVis(loader, false);
 };
@@ -197,6 +200,19 @@ const resetSections =()=>{
     app.trendingChecked = 0;
 };
 
+//triggered by the button, it will fetch coin data based of the coin symbol and display it on the overlay
+const handleView =(e, sym)=>{
+    e.stopPropagation();
+    console.log(sym);
+    fetch(dataEndpoint.coins(sym))
+    .then(res=>res.json())
+    .then(data=>{
+        displayInfo.querySelector("#data-info").innerHTML = data.description.en;
+        toggleElDisplay(displayInfo, "block");
+        toggleElVis(overlay, true);
+    })
+};
+
 //items template 
 const displayItemTemplate =({name, thumb, symbol, mktRank})=>{
     return `<div class="coin-item" onclick='itemClick(this, "${symbol}");'>
@@ -204,6 +220,7 @@ const displayItemTemplate =({name, thumb, symbol, mktRank})=>{
     <div>${name}</div>
     <div>${mktRank}</div>
     <div class="itemWatching"><i class="fa ${toggleWatchIcons(!isWatched(symbol))}"></i></div>
+    <div><button onclick="handleView(event, '${symbol}')">View</button></div>
 </div>`;
 };
 
